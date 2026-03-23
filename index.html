@@ -719,7 +719,7 @@
     </button>
   </form>
   <p style="margin-top:1.5rem; font-family:'DM Mono',monospace; font-size:.7rem; color:var(--muted); letter-spacing:.1em;" class="reveal" style="transition-delay:.4s">
-    OR REACH US AT · support@hyperhexsolutions.com
+    OR REACH US AT · hello@hyperhexsolutions.com
   </p>
 </section>
 
@@ -741,7 +741,25 @@
   <p class="footer-copy">© 2025 HyperHex Solutions. All rights reserved.</p>
 </footer>
 
-<script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-analytics.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCrw4MlYQyd2QXoDlPCgj2nt3EtuqhVrB4",
+    authDomain: "herhexsolutions.firebaseapp.com",
+    projectId: "herhexsolutions",
+    storageBucket: "herhexsolutions.firebasestorage.app",
+    messagingSenderId: "143805930092",
+    appId: "1:143805930092:web:9374b14ad71afd0e795649",
+    measurementId: "G-DM3Y14DXP3"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const db = getFirestore(app);
+
   // CURSOR
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
@@ -781,9 +799,6 @@
   const formSuccess = document.getElementById('formSuccess');
   const closeSuccess = document.getElementById('closeSuccess');
 
-  // Replace with your Web3Forms Access Key from web3forms.com
-  const WEB3FORMS_KEY = 'YOUR_ACCESS_KEY_HERE';
-
   function showSuccess() {
     formOverlay.style.display = 'block';
     formSuccess.style.display = 'block';
@@ -801,24 +816,21 @@
     btnLoading.style.display = 'inline';
     submitBtn.disabled = true;
 
-    const formData = new FormData(contactForm);
-    formData.append('access_key', WEB3FORMS_KEY);
+    const formData = {
+      name: document.getElementById('name').value,
+      organization: document.getElementById('org').value,
+      email: document.getElementById('email').value,
+      phone: document.getElementById('phone').value,
+      message: document.getElementById('message').value,
+      createdAt: serverTimestamp()
+    };
 
     try {
-      const response = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        body: formData
-      });
-
-      const result = await response.json();
-
-      if (result.success) {
-        showSuccess();
-      } else {
-        alert('Something went wrong. Please try again or email us directly.');
-      }
+      await addDoc(collection(db, 'messages'), formData);
+      showSuccess();
     } catch (error) {
-      alert('Network error. Please check your connection and try again.');
+      console.error('Firebase error:', error);
+      alert('Something went wrong. Please try again or email us directly.');
     }
 
     btnText.style.display = 'inline';
