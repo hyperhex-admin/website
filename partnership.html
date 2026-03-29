@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Partner with Us — HyperHex Solutions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&family=Barlow:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --hex: #00FFB2;
+    --hex-dim: #00c887;
+    --dark: #060A0F;
+    --dark2: #0C1219;
+    --dark3: #121C27;
+    --steel: #1E2D3D;
+    --muted: #4A6075;
+    --text: #C8D8E8;
+    --white: #EEF4FA;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'Barlow', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0; opacity: .6;
+  }
+
+  .hex-bg {
+    position: fixed; inset: 0; overflow: hidden; z-index: 0;
+    opacity: .08;
+  }
+  .hex-bg svg { width: 100%; height: 100%; }
+
+  nav {
+    position: relative; z-index: 500;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.4rem 5vw;
+  }
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem; letter-spacing: .12em;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .logo span { color: var(--hex); }
+  .nav-back {
+    font-family: 'DM Mono', monospace; font-size: .75rem;
+    letter-spacing: .1em; text-transform: uppercase;
+    color: var(--muted); text-decoration: none;
+    transition: color .2s;
+  }
+  .nav-back:hover { color: var(--hex); }
+
+  main {
+    position: relative; z-index: 10;
+    flex: 1;
+    padding: 4rem 5vw 8rem;
+    max-width: 700px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .hero-tag {
+    font-family: 'DM Mono', monospace; font-size: .7rem;
+    letter-spacing: .2em; text-transform: uppercase;
+    color: var(--hex); margin-bottom: 1rem;
+  }
+  .hero-tag::before { content: '// '; opacity: .5; }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 8vw, 5rem);
+    line-height: .95; color: var(--white);
+    margin-bottom: 1.5rem;
+  }
+
+  .intro {
+    font-size: 1.05rem; line-height: 1.7; color: var(--text);
+    font-weight: 300; margin-bottom: 3rem;
+  }
+
+  .perks {
+    display: grid; gap: 1rem; margin-bottom: 3rem;
+  }
+  .perk {
+    display: flex; align-items: flex-start; gap: 1rem;
+    padding: 1.2rem; border: 1px solid var(--steel);
+    background: var(--dark2);
+  }
+  .perk-icon {
+    color: var(--hex); font-size: 1.2rem; flex-shrink: 0;
+    margin-top: .1rem;
+  }
+  .perk h3 {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem;
+    color: var(--white); margin-bottom: .3rem;
+  }
+  .perk p { font-size: .85rem; color: var(--muted); line-height: 1.5; }
+
+  .section-label {
+    font-family: 'DM Mono', monospace; font-size: .7rem;
+    letter-spacing: .2em; text-transform: uppercase;
+    color: var(--hex); margin-bottom: 1.5rem;
+  }
+  .section-label::before { content: '[ '; }
+  .section-label::after { content: ' ]'; }
+
+  .form-field {
+    display: flex; flex-direction: column; gap: .4rem;
+    margin-bottom: 1rem;
+  }
+  .form-label {
+    font-family: 'DM Mono', monospace; font-size: .65rem;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: var(--muted);
+  }
+  .form-input, .form-textarea, .form-select {
+    background: var(--dark2); border: 1px solid var(--steel);
+    color: var(--white); padding: .75rem 1rem;
+    font-family: 'DM Mono', monospace; font-size: .8rem;
+    outline: none; transition: border-color .2s;
+    width: 100%;
+  }
+  .form-input:focus, .form-textarea:focus, .form-select:focus {
+    border-color: var(--hex);
+  }
+  .form-input::placeholder, .form-textarea::placeholder { color: var(--muted); }
+  .form-textarea { min-height: 100px; resize: vertical; }
+  .form-select { appearance: none; cursor: pointer; }
+  .form-select option { background: var(--dark2); }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 500px) { .form-row { grid-template-columns: 1fr; } }
+
+  .form-submit {
+    width: 100%; margin-top: 1rem;
+    font-family: 'DM Mono', monospace; font-size: .8rem;
+    letter-spacing: .1em; text-transform: uppercase;
+    background: var(--hex); color: var(--dark);
+    border: none; padding: .85rem 2.2rem;
+    cursor: pointer; font-weight: 500;
+    transition: transform .15s, box-shadow .15s;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  }
+  .form-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px rgba(0,255,178,.3);
+  }
+
+  .success-overlay { position: fixed; inset: 0; background: rgba(6,10,15,.85); z-index: 1000; display: none; }
+  .success-modal {
+    position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    background: var(--dark2); border: 1px solid var(--hex);
+    padding: 2.5rem 3rem; text-align: center; z-index: 1001;
+    max-width: 400px; width: 90%;
+  }
+  .success-modal h2 {
+    font-family: 'Bebas Neue', sans-serif; font-size: 2rem;
+    color: var(--hex); margin-bottom: .8rem;
+  }
+  .success-modal p { font-size: .9rem; color: var(--text); line-height: 1.6; }
+  .close-btn {
+    position: absolute; top: 1rem; right: 1.2rem;
+    background: none; border: none; color: var(--muted);
+    font-size: 1.4rem; cursor: pointer;
+  }
+  .close-btn:hover { color: var(--hex); }
+
+  footer {
+    position: relative; z-index: 10;
+    border-top: 1px solid var(--steel);
+    padding: 2rem 5vw;
+    text-align: center;
+  }
+  .footer-copy {
+    font-family: 'DM Mono', monospace; font-size: .68rem;
+    letter-spacing: .1em; color: var(--muted);
+  }
+</style>
+</head>
+<body>
+
+<div class="hex-bg">
+  <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+    <defs>
+      <pattern id="hexPattern" x="0" y="0" width="60" height="52" patternUnits="userSpaceOnUse">
+        <polygon points="30,2 58,17 58,35 30,50 2,35 2,17" fill="none" stroke="#00FFB2" stroke-width=".6"/>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#hexPattern)"/>
+  </svg>
+</div>
+
+<nav>
+  <a href="/" class="logo">Hyper<span>Hex</span></a>
+  <a href="/" class="nav-back">← Back to Site</a>
+</nav>
+
+<main>
+  <p class="hero-tag">Partnership Inquiry</p>
+  <h1>Build with us.</h1>
+  <p class="intro">
+    We're always looking for talented developers, engineers, and consultants who understand the manufacturing world — or want to learn it. If that sounds like you, we'd like to hear from you.
+  </p>
+
+  <div class="perks">
+    <div class="perk">
+      <span class="perk-icon">⬡</span>
+      <div>
+        <h3>Project-Based Collaboration</h3>
+        <p>Work on real manufacturing projects — MES, automation, IoT — alongside our core team. Flexible commitment, meaningful work.</p>
+      </div>
+    </div>
+    <div class="perk">
+      <span class="perk-icon">⬡</span>
+      <div>
+        <h3>Technical Mentorship</h3>
+        <p>Learn industrial software patterns from engineers who've shipped to real factory floors. SCADA, OPC-UA, PLCs — we can teach you.</p>
+      </div>
+    </div>
+    <div class="perk">
+      <span class="perk-icon">⬡</span>
+      <div>
+        <h3>Growth Path</h3>
+        <p>Strong performers can move into full-time roles or lead their own client engagements. Your trajectory is up to you.</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="section-label">Apply for Partnership</p>
+  <form id="partnerForm">
+    <div class="form-row">
+      <div class="form-field">
+        <label class="form-label" for="name">Name *</label>
+        <input class="form-input" type="text" id="name" name="name" placeholder="Jane Smith" required>
+      </div>
+      <div class="form-field">
+        <label class="form-label" for="email">Email *</label>
+        <input class="form-input" type="email" id="email" name="email" placeholder="jane@company.com" required>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-field">
+        <label class="form-label" for="github">GitHub / LinkedIn</label>
+        <input class="form-input" type="text" id="github" name="github" placeholder="github.com/janesmith">
+      </div>
+      <div class="form-field">
+        <label class="form-label" for="role">Role Interest *</label>
+        <select class="form-select" id="role" name="role" required>
+          <option value="" disabled selected>Select a role</option>
+          <option value="frontend">Frontend Developer</option>
+          <option value="backend">Backend / API Developer</option>
+          <option value="fullstack">Full Stack Developer</option>
+          <option value="iot">IoT / Embedded Engineer</option>
+          <option value="plc">PLC / Automation Engineer</option>
+          <option value="consultant">Technical Consultant</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-field">
+      <label class="form-label" for="experience">Years of Experience *</label>
+      <select class="form-select" id="experience" name="experience" required>
+        <option value="" disabled selected>Select experience level</option>
+        <option value="0-2">0–2 years</option>
+        <option value="3-5">3–5 years</option>
+        <option value="6-10">6–10 years</option>
+        <option value="10+">10+ years</option>
+      </select>
+    </div>
+    <div class="form-field">
+      <label class="form-label" for="message">Tell us about yourself</label>
+      <textarea class="form-textarea" id="message" name="message" placeholder="Your background, what you've built, and why you're interested in manufacturing software..."></textarea>
+    </div>
+    <button type="submit" class="form-submit" id="submitBtn">Submit Application</button>
+  </form>
+</main>
+
+<div class="success-overlay" id="successOverlay"></div>
+<div class="success-modal" id="successModal" style="display:none">
+  <button class="close-btn" id="closeModal">×</button>
+  <h2>Application Sent!</h2>
+  <p>Thanks for your interest. We'll review your profile and reach out if there's a good fit — usually within a week.</p>
+</div>
+
+<footer>
+  <p class="footer-copy">© 2026 HyperHex Solutions. All rights reserved.</p>
+</footer>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+  import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-analytics.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCrw4MlYQyd2QXoDlPCgj2nt3EtuqhVrB4",
+    authDomain: "herhexsolutions.firebaseapp.com",
+    projectId: "herhexsolutions",
+    storageBucket: "herhexsolutions.firebasestorage.app",
+    messagingSenderId: "143805930092",
+    appId: "1:143805930092:web:9374b14ad71afd0e795649",
+    measurementId: "G-DM3Y14DXP3"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const db = getFirestore(app);
+
+  logEvent(analytics, 'page_view', { page_title: document.title, page_location: window.location.href });
+
+  const form = document.getElementById('partnerForm');
+  const successModal = document.getElementById('successModal');
+  const successOverlay = document.getElementById('successOverlay');
+  const closeBtn = document.getElementById('closeModal');
+
+  function showSuccess() {
+    successModal.style.display = 'block';
+    successOverlay.style.display = 'block';
+    form.reset();
+  }
+
+  function hideSuccess() {
+    successModal.style.display = 'none';
+    successOverlay.style.display = 'none';
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+
+    const formData = {
+      type: 'partnership',
+      name: document.getElementById('name').value,
+      email: document.getElementById('email').value,
+      github: document.getElementById('github').value,
+      role: document.getElementById('role').value,
+      experience: document.getElementById('experience').value,
+      message: document.getElementById('message').value,
+      createdAt: serverTimestamp()
+    };
+
+    try {
+      await addDoc(collection(db, 'messages'), formData);
+      logEvent(analytics, 'partnership_application');
+      showSuccess();
+    } catch (err) {
+      console.error(err);
+      alert('Something went wrong. Please try again or email us directly.');
+    }
+
+    btn.textContent = 'Submit Application';
+    btn.disabled = false;
+  });
+
+  closeBtn.addEventListener('click', hideSuccess);
+  successOverlay.addEventListener('click', hideSuccess);
+</script>
+</body>
+</html>
