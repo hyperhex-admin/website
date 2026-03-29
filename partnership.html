@@ -98,16 +98,27 @@
     display: flex; align-items: flex-start; gap: 1rem;
     padding: 1.2rem; border: 1px solid var(--steel);
     background: var(--dark2);
+    cursor: pointer;
+    transition: border-color .2s, background .2s;
+  }
+  .perk:hover {
+    border-color: var(--hex-dim);
+  }
+  .perk.selected {
+    border-color: var(--hex);
+    background: var(--dark3);
   }
   .perk-icon {
     color: var(--hex); font-size: 1.2rem; flex-shrink: 0;
     margin-top: .1rem;
   }
+
   .perk h3 {
     font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem;
     color: var(--white); margin-bottom: .3rem;
   }
   .perk p { font-size: .85rem; color: var(--muted); line-height: 1.5; }
+  .perk input[type="radio"] { display: none; }
 
   .section-label {
     font-family: 'DM Mono', monospace; font-size: .7rem;
@@ -212,31 +223,35 @@
   <p class="hero-tag">Partnership Inquiry</p>
   <h1>Build with us.</h1>
   <p class="intro">
-    We're always looking for talented developers, engineers, and consultants who understand the manufacturing world — or want to learn it. If that sounds like you, we'd like to hear from you.
-  </p>
+    We are always looking for talented developers, engineers, and consultants who understand the manufacturing world—or are eager to learn. If that sounds like you, we would love to hear from you!
+
+Please provide your phone details so that we can contact you in case a project matches your talents.</p>
 
   <div class="perks">
-    <div class="perk">
+    <label class="perk" data-value="collaboration">
+      <input type="radio" name="partnershipType" value="collaboration">
       <span class="perk-icon">⬡</span>
       <div>
         <h3>Project-Based Collaboration</h3>
         <p>Work on real manufacturing projects — MES, automation, IoT — alongside our core team. Flexible commitment, meaningful work.</p>
       </div>
-    </div>
-    <div class="perk">
+    </label>
+    <label class="perk" data-value="mentorship">
+      <input type="radio" name="partnershipType" value="mentorship">
       <span class="perk-icon">⬡</span>
       <div>
         <h3>Technical Mentorship</h3>
         <p>Learn industrial software patterns from engineers who've shipped to real factory floors. SCADA, OPC-UA, PLCs — we can teach you.</p>
       </div>
-    </div>
-    <div class="perk">
+    </label>
+    <label class="perk" data-value="growth">
+      <input type="radio" name="partnershipType" value="growth">
       <span class="perk-icon">⬡</span>
       <div>
         <h3>Growth Path</h3>
         <p>Strong performers can move into full-time roles or lead their own client engagements. Your trajectory is up to you.</p>
       </div>
-    </div>
+    </label>
   </div>
 
   <p class="section-label">Apply for Partnership</p>
@@ -324,11 +339,21 @@
   const successModal = document.getElementById('successModal');
   const successOverlay = document.getElementById('successOverlay');
   const closeBtn = document.getElementById('closeModal');
+  const perks = document.querySelectorAll('.perk');
+
+  perks.forEach(perk => {
+    perk.addEventListener('click', () => {
+      perks.forEach(p => p.classList.remove('selected'));
+      perk.classList.add('selected');
+      perk.querySelector('input[type="radio"]').checked = true;
+    });
+  });
 
   function showSuccess() {
     successModal.style.display = 'block';
     successOverlay.style.display = 'block';
     form.reset();
+    perks.forEach(p => p.classList.remove('selected'));
   }
 
   function hideSuccess() {
@@ -342,6 +367,8 @@
     btn.textContent = 'Sending...';
     btn.disabled = true;
 
+    const partnershipType = document.querySelector('input[name="partnershipType"]:checked')?.value || '';
+
     const formData = {
       type: 'partnership',
       name: document.getElementById('name').value,
@@ -349,6 +376,7 @@
       github: document.getElementById('github').value,
       role: document.getElementById('role').value,
       experience: document.getElementById('experience').value,
+      partnershipType: partnershipType,
       message: document.getElementById('message').value,
       createdAt: serverTimestamp()
     };
