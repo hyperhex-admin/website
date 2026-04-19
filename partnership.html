@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Partner with Us — HyperHex Solutions</title>
+<title>Partner with Us — Shree Achyutam</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&family=Barlow:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
@@ -189,6 +189,69 @@
   }
   .close-btn:hover { color: var(--hex); }
 
+  /* REBRAND LOADER */
+  #rebrand-loader {
+    position: fixed; inset: 0; z-index: 10000;
+    background: var(--dark); display: flex;
+    flex-direction: column; align-items: center; justify-content: center;
+    animation: loaderFadeOut .6s 3.5s forwards;
+  }
+  @keyframes loaderFadeOut {
+    to { opacity: 0; pointer-events: none; transform: scale(1.02); }
+  }
+  .rebrand-content {
+    display: flex; align-items: center; gap: 2.5rem;
+    margin-bottom: 3rem;
+  }
+  .old-brand, .new-brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem; letter-spacing: .1em;
+    color: var(--white); opacity: 0;
+    animation: brandReveal .8s ease forwards;
+  }
+  .old-brand { animation-delay: .3s; }
+  .new-brand { animation-delay: 1.8s; }
+  .old-brand span, .new-brand span { color: var(--hex); }
+  .rebrand-arrow {
+    font-size: 2rem; color: var(--hex);
+    opacity: 0; animation: arrowSlide .6s 1.1s forwards;
+  }
+  @keyframes brandReveal {
+    0% { opacity: 0; transform: translateY(20px); filter: blur(8px); }
+    60% { opacity: 1; transform: translateY(-5px); filter: blur(0); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes arrowSlide {
+    0% { opacity: 0; transform: translateX(-30px) scale(0.5); }
+    100% { opacity: 1; transform: translateX(0) scale(1); }
+  }
+  .rebrand-progress {
+    width: 280px; height: 2px; background: var(--steel);
+    border-radius: 1px; overflow: hidden;
+  }
+  .rebrand-bar {
+    height: 100%; width: 0; background: var(--hex);
+    box-shadow: 0 0 20px var(--hex);
+    animation: loadProgress 2.5s ease-in-out 2.2s forwards;
+  }
+  @keyframes loadProgress {
+    0% { width: 0; }
+    20% { width: 30%; }
+    50% { width: 60%; }
+    80% { width: 85%; }
+    100% { width: 100%; }
+  }
+  .rebrand-tagline {
+    margin-top: 2rem;
+    font-family: 'DM Mono', monospace; font-size: .75rem;
+    letter-spacing: .15em; text-transform: uppercase;
+    color: var(--muted); opacity: 0;
+    animation: taglineFade .5s 3s forwards;
+  }
+  @keyframes taglineFade {
+    to { opacity: 1; }
+  }
+
   footer {
     position: relative; z-index: 10;
     border-top: 1px solid var(--steel);
@@ -201,6 +264,16 @@
   }
 </style>
 </head>
+<div id="rebrand-loader">
+  <div class="rebrand-content">
+    <div class="old-brand">HyperHex<span>Solutions</span></div>
+    <div class="rebrand-arrow">→</div>
+    <div class="new-brand">Shree<span>Achyutam</span></div>
+  </div>
+  <div class="rebrand-progress"><div class="rebrand-bar"></div></div>
+  <div class="rebrand-tagline">Custom Software for Manufacturing</div>
+</div>
+
 <body>
 
 <div class="hex-bg">
@@ -215,7 +288,7 @@
 </div>
 
 <nav>
-  <a href="/" class="logo">Hyper<span>Hex</span></a>
+  <a href="/" class="logo">Shree <span>Achyutam</span></a>
   <a href="/" class="nav-back">← Back to Site</a>
 </nav>
 
@@ -311,7 +384,7 @@ Please provide your phone details so that we can contact you in case a project m
 </div>
 
 <footer>
-  <p class="footer-copy">© 2026 HyperHex Solutions. All rights reserved.</p>
+  <p class="footer-copy">© 2026 Shree Achyutam. All rights reserved.</p>
 </footer>
 
 <script type="module">
