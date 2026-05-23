@@ -194,7 +194,7 @@
     position: fixed; inset: 0; z-index: 10000;
     background: var(--dark); display: flex;
     flex-direction: column; align-items: center; justify-content: center;
-    animation: loaderFadeOut .6s 3.5s forwards;
+    animation: loaderFadeOut .4s 1.8s forwards;
   }
   @keyframes loaderFadeOut {
     to { opacity: 0; pointer-events: none; transform: scale(1.02); }
@@ -207,14 +207,14 @@
     font-family: 'Bebas Neue', sans-serif;
     font-size: 2.5rem; letter-spacing: .1em;
     color: var(--white); opacity: 0;
-    animation: brandReveal .8s ease forwards;
+    animation: brandReveal .5s ease forwards;
   }
-  .old-brand { animation-delay: .3s; }
-  .new-brand { animation-delay: 1.8s; }
+  .old-brand { animation-delay: .15s; }
+  .new-brand { animation-delay: 1s; }
   .old-brand span, .new-brand span { color: var(--hex); }
   .rebrand-arrow {
     font-size: 2rem; color: var(--hex);
-    opacity: 0; animation: arrowSlide .6s 1.1s forwards;
+    opacity: 0; animation: arrowSlide .4s .6s forwards;
   }
   @keyframes brandReveal {
     0% { opacity: 0; transform: translateY(20px); filter: blur(8px); }
@@ -232,7 +232,7 @@
   .rebrand-bar {
     height: 100%; width: 0; background: var(--hex);
     box-shadow: 0 0 20px var(--hex);
-    animation: loadProgress 2.5s ease-in-out 2.2s forwards;
+    animation: loadProgress 1s ease-in-out 1.2s forwards;
   }
   @keyframes loadProgress {
     0% { width: 0; }
@@ -246,12 +246,27 @@
     font-family: 'DM Mono', monospace; font-size: .75rem;
     letter-spacing: .15em; text-transform: uppercase;
     color: var(--muted); opacity: 0;
-    animation: taglineFade .5s 3s forwards;
+    animation: taglineFade .3s 1.6s forwards;
   }
   @keyframes taglineFade {
     to { opacity: 1; }
   }
 
+  @media (max-width: 600px) {
+    #rebrand-loader .rebrand-content {
+      flex-direction: column; gap: .75rem;
+    }
+    #rebrand-loader .rebrand-arrow {
+      rotate: 90deg;
+    }
+    #rebrand-loader .old-brand,
+    #rebrand-loader .new-brand {
+      font-size: 1.8rem;
+    }
+    #rebrand-loader .rebrand-progress {
+      width: min(280px, 70vw);
+    }
+  }
   footer {
     position: relative; z-index: 10;
     border-top: 1px solid var(--steel);
