@@ -268,14 +268,60 @@
     }
   }
   footer {
-    position: relative; z-index: 10;
+    position: relative; z-index: 1100;
     border-top: 1px solid var(--steel);
-    padding: 2rem 5vw;
+    padding: 2.5rem 5vw 1.5rem;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+    align-items: start;
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem;
+    letter-spacing: .12em; color: var(--white);
+    margin-bottom: .35rem;
+  }
+  .footer-logo span { color: var(--hex); }
+  .footer-tagline {
+    font-family: 'DM Mono', monospace; font-size: .65rem;
+    letter-spacing: .08em; color: var(--muted);
+  }
+  .footer-heading {
+    font-family: 'Bebas Neue', sans-serif; font-size: .75rem;
+    letter-spacing: .15em; color: var(--white);
+    margin-bottom: .6rem;
+  }
+  .footer-nav, .footer-contact {
+    display: flex; flex-direction: column; gap: .4rem;
+  }
+  .footer-nav a, .footer-contact a {
+    font-family: 'DM Mono', monospace; font-size: .65rem;
+    letter-spacing: .06em; color: var(--muted); text-decoration: none;
+    transition: color .2s;
+  }
+  .footer-nav a:hover, .footer-contact a:hover { color: var(--hex); }
+  .footer-contact-wrap {
+    display: flex;
+    gap: 1.25rem;
+    align-items: start;
+  }
+  .footer-map { flex: 1; min-width: 0; }
+  .footer-map iframe { width: 100%; height: 140px; }
+  .footer-bottom {
+    border-top: 1px solid var(--steel);
+    padding-top: 1rem;
     text-align: center;
   }
   .footer-copy {
-    font-family: 'DM Mono', monospace; font-size: .68rem;
+    font-family: 'DM Mono', monospace; font-size: .6rem;
     letter-spacing: .1em; color: var(--muted);
+  }
+  @media (max-width: 700px) {
+    .footer-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    .footer-contact-wrap { flex-direction: column; }
   }
 </style>
 </head>
@@ -399,7 +445,37 @@ Please provide your phone details so that we can contact you in case a project m
 </div>
 
 <footer>
-  <p class="footer-copy">© 2026 Shree Achyutam. All rights reserved.</p>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo">Shree <span>Achyutam</span></div>
+      <p class="footer-tagline">Custom Software for Manufacturing</p>
+    </div>
+    <div class="footer-nav">
+      <h4 class="footer-heading">Navigate</h4>
+      <a href="/">Home</a>
+      <a href="/#services">Services</a>
+      <a href="/#contact">Contact</a>
+    </div>
+    <div class="footer-contact-wrap">
+      <div class="footer-contact">
+        <h4 class="footer-heading">Contact</h4>
+        <a href="mailto:support@shreeachyutam.in">support@shreeachyutam.in</a>
+        <a href="tel:+918431999811">+91 84319 99811</a>
+        <a href="https://maps.app.goo.gl/VpMKi415DkS1MDdv6" target="_blank" rel="noopener">Bilimora, Navsari, Gujarat 396321</a>
+        <p class="footer-tagline" style="margin-top:.35rem">Global Operations from Bengaluru</p>
+      </div>
+      <div class="footer-map">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3720.0!2d72.985518!3d20.768691!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjDCsDQ2JzA3LjMiTiA3MsKwNTknMDcuOCJF!5e0!3m2!1sen!2sin!4v1700000000000"
+          width="100%" height="140" style="border:0; border-radius:6px; filter:invert(90%) hue-rotate(180deg) brightness(1.1) contrast(0.9);"
+          allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">&copy; 2026 Shree Achyutam. All rights reserved.</p>
+  </div>
 </footer>
 
 <script type="module">
