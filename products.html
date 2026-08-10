@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Products — Shree Achyutam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&family=Barlow:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --hex: #00FFB2;
+    --hex-dim: #00c887;
+    --dark: #060A0F;
+    --dark2: #0C1219;
+    --dark3: #121C27;
+    --steel: #1E2D3D;
+    --muted: #4A6075;
+    --text: #C8D8E8;
+    --white: #EEF4FA;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'Barlow', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0; opacity: .6;
+  }
+
+  .hex-bg {
+    position: fixed; inset: 0; overflow: hidden; z-index: 0;
+    opacity: .08;
+  }
+  .hex-bg svg { width: 100%; height: 100%; }
+
+  nav {
+    position: relative; z-index: 500;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.4rem 5vw;
+  }
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem; letter-spacing: .12em;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .logo span { color: var(--hex); }
+  .nav-back {
+    font-family: 'DM Mono', monospace; font-size: .75rem;
+    letter-spacing: .1em; text-transform: uppercase;
+    color: var(--muted); text-decoration: none;
+    transition: color .2s;
+  }
+  .nav-back:hover { color: var(--hex); }
+
+  main {
+    position: relative; z-index: 10;
+    flex: 1;
+    padding: 4rem 5vw 8rem;
+    max-width: 1080px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .hero-tag {
+    font-family: 'DM Mono', monospace; font-size: .7rem;
+    letter-spacing: .2em; text-transform: uppercase;
+    color: var(--hex); margin-bottom: 1rem;
+  }
+  .hero-tag::before { content: '// '; opacity: .5; }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 8vw, 5rem);
+    line-height: .95; color: var(--white);
+    margin-bottom: 1.5rem;
+  }
+
+  .intro {
+    font-size: 1.05rem; line-height: 1.7; color: var(--text);
+    font-weight: 300; margin-bottom: 4.5rem; max-width: 620px;
+  }
+
+  /* PRODUCT DETAIL SECTIONS */
+  .product-detail {
+    border: 1px solid var(--steel);
+    background: var(--dark2);
+    padding: 3rem;
+    margin-bottom: 2.5rem;
+    position: relative; overflow: hidden;
+  }
+  .product-detail::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 3px; height: 100%; background: var(--hex); opacity: .6;
+  }
+  .detail-head {
+    display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+  .detail-head .product-icon { width: 48px; height: 48px; color: var(--hex); flex-shrink: 0; }
+  .detail-head h2 {
+    font-family: 'Bebas Neue', sans-serif; font-size: 2.4rem;
+    letter-spacing: .04em; color: var(--white); line-height: 1;
+  }
+  .detail-tags { display: flex; align-items: center; gap: .7rem; flex-wrap: wrap; margin-left: auto; }
+  .product-tag {
+    font-family: 'DM Mono', monospace; font-size: .62rem;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: var(--hex); border: 1px solid rgba(0,255,178,.3);
+    padding: .3rem .7rem;
+  }
+  .status-pill {
+    font-family: 'DM Mono', monospace; font-size: .62rem;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: var(--hex); border: 1px solid rgba(0,255,178,.3);
+    padding: .3rem .7rem; display: flex; align-items: center; gap: .5rem;
+  }
+  .status-pill i {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--hex); box-shadow: 0 0 8px var(--hex);
+    animation: statusPulse 2s infinite;
+  }
+  @keyframes statusPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .3; }
+  }
+
+  .detail-desc {
+    font-size: 1rem; line-height: 1.8; color: var(--text);
+    font-weight: 300; max-width: 820px; margin-bottom: 2.5rem;
+  }
+
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1px; background: var(--steel);
+    margin-bottom: 2.5rem;
+  }
+  .feature { background: var(--dark3); padding: 1.5rem; }
+  .feature h4 {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.05rem;
+    letter-spacing: .04em; color: var(--hex); margin-bottom: .4rem;
+  }
+  .feature p { font-size: .82rem; color: var(--muted); line-height: 1.6; }
+
+  .detail-launch {
+    display: inline-flex; align-items: center; justify-content: space-between; gap: 2.5rem;
+    font-family: 'DM Mono', monospace; font-size: .72rem;
+    letter-spacing: .15em; text-transform: uppercase;
+    color: var(--dark); background: var(--hex);
+    padding: .9rem 1.8rem; text-decoration: none; font-weight: 500;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    transition: transform .15s, box-shadow .15s;
+  }
+  .detail-launch:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px rgba(0,255,178,.3);
+  }
+  .detail-launch span { font-size: 1rem; }
+
+  .product-cta {
+    margin-top: 4rem; text-align: center;
+    border: 1px solid var(--steel); background: var(--dark2);
+    padding: 4rem 2rem; position: relative; overflow: hidden;
+  }
+  .product-cta::before {
+    content: ''; position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(0,255,178,.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .product-cta h2 {
+    font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 5vw, 3.5rem);
+    color: var(--white); line-height: 1; margin-bottom: 1rem;
+  }
+  .product-cta h2 span { color: var(--hex); }
+  .product-cta p {
+    font-size: .95rem; color: var(--muted); max-width: 420px;
+    margin: 0 auto 2rem;
+  }
+
+  .reveal {
+    opacity: 0; transform: translateY(28px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* REBRAND LOADER */
+  #rebrand-loader {
+    position: fixed; inset: 0; z-index: 10000;
+    background: var(--dark); display: flex;
+    flex-direction: column; align-items: center; justify-content: center;
+    animation: loaderFadeOut .4s 1.8s forwards;
+  }
+  @keyframes loaderFadeOut {
+    to { opacity: 0; pointer-events: none; transform: scale(1.02); }
+  }
+  .rebrand-content {
+    display: flex; align-items: center; gap: 2.5rem;
+    margin-bottom: 3rem;
+  }
+  .old-brand, .new-brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem; letter-spacing: .1em;
+    color: var(--white); opacity: 0;
+    animation: brandReveal .5s ease forwards;
+  }
+  .old-brand { animation-delay: .15s; }
+  .new-brand { animation-delay: 1s; }
+  .old-brand span, .new-brand span { color: var(--hex); }
+  .rebrand-arrow {
+    font-size: 2rem; color: var(--hex);
+    opacity: 0; animation: arrowSlide .4s .6s forwards;
+  }
+  @keyframes brandReveal {
+    0% { opacity: 0; transform: translateY(20px); filter: blur(8px); }
+    60% { opacity: 1; transform: translateY(-5px); filter: blur(0); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes arrowSlide {
+    0% { opacity: 0; transform: translateX(-30px) scale(0.5); }
+    100% { opacity: 1; transform: translateX(0) scale(1); }
+  }
+  .rebrand-progress {
+    width: 280px; height: 2px; background: var(--steel);
+    border-radius: 1px; overflow: hidden;
+  }
+  .rebrand-bar {
+    height: 100%; width: 0; background: var(--hex);
+    box-shadow: 0 0 20px var(--hex);
+    animation: loadProgress 1s ease-in-out 1.2s forwards;
+  }
+  @keyframes loadProgress {
+    0% { width: 0; }
+    20% { width: 30%; }
+    50% { width: 60%; }
+    80% { width: 85%; }
+    100% { width: 100%; }
+  }
+  .rebrand-tagline {
+    margin-top: 2rem;
+    font-family: 'DM Mono', monospace; font-size: .75rem;
+    letter-spacing: .15em; text-transform: uppercase;
+    color: var(--muted); opacity: 0;
+    animation: taglineFade .3s 1.6s forwards;
+  }
+  @keyframes taglineFade {
+    to { opacity: 1; }
+  }
+
+  footer {
+    position: relative; z-index: 1100;
+    border-top: 1px solid var(--steel);
+    padding: 2.5rem 5vw 1.5rem;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+    align-items: start;
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem;
+    letter-spacing: .12em; color: var(--white);
+    margin-bottom: .35rem;
+  }
+  .footer-logo span { color: var(--hex); }
+  .footer-tagline {
+    font-family: 'DM Mono', monospace; font-size: .65rem;
+    letter-spacing: .08em; color: var(--muted);
+  }
+  .footer-heading {
+    font-family: 'Bebas Neue', sans-serif; font-size: .75rem;
+    letter-spacing: .15em; color: var(--white);
+    margin-bottom: .6rem;
+  }
+  .footer-nav, .footer-contact {
+    display: flex; flex-direction: column; gap: .4rem;
+  }
+  .footer-nav a, .footer-contact a {
+    font-family: 'DM Mono', monospace; font-size: .65rem;
+    letter-spacing: .06em; color: var(--muted); text-decoration: none;
+    transition: color .2s;
+  }
+  .footer-nav a:hover, .footer-contact a:hover { color: var(--hex); }
+  .footer-contact-wrap {
+    display: flex;
+    gap: 1.25rem;
+    align-items: start;
+  }
+  .footer-map { flex: 1; min-width: 0; }
+  .footer-map iframe { width: 100%; height: 140px; }
+  .footer-bottom {
+    border-top: 1px solid var(--steel);
+    padding-top: 1rem;
+    text-align: center;
+  }
+  .footer-copy {
+    font-family: 'DM Mono', monospace; font-size: .6rem;
+    letter-spacing: .1em; color: var(--muted);
+  }
+  @media (max-width: 700px) {
+    .footer-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    .footer-contact-wrap { flex-direction: column; }
+    .product-detail { padding: 2rem; }
+  }
+  @media (max-width: 600px) {
+    #rebrand-loader .rebrand-content {
+      flex-direction: column; gap: .75rem;
+    }
+    #rebrand-loader .rebrand-arrow {
+      rotate: 90deg;
+    }
+    #rebrand-loader .old-brand,
+    #rebrand-loader .new-brand {
+      font-size: 1.8rem;
+    }
+    #rebrand-loader .rebrand-progress {
+      width: min(280px, 70vw);
+    }
+  }
+</style>
+</head>
+<div id="rebrand-loader">
+  <div class="rebrand-content">
+    <div class="old-brand">HyperHex<span>Solutions</span></div>
+    <div class="rebrand-arrow">→</div>
+    <div class="new-brand">Shree<span>Achyutam</span></div>
+  </div>
+  <div class="rebrand-progress"><div class="rebrand-bar"></div></div>
+  <div class="rebrand-tagline">Custom Software for Manufacturing</div>
+</div>
+
+<body>
+
+<div class="hex-bg">
+  <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+    <defs>
+      <pattern id="hexPattern" x="0" y="0" width="60" height="52" patternUnits="userSpaceOnUse">
+        <polygon points="30,2 58,17 58,35 30,50 2,35 2,17" fill="none" stroke="#00FFB2" stroke-width=".6"/>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#hexPattern)"/>
+  </svg>
+</div>
+
+<nav>
+  <a href="/" class="logo">Shree <span>Achyutam</span></a>
+  <a href="/" class="nav-back">← Back to Site</a>
+</nav>
+
+<main>
+  <p class="hero-tag reveal">Our Products</p>
+  <h1 class="reveal">Live tools.<br>Shipped by Shree Achyutam.</h1>
+  <p class="intro reveal" style="transition-delay:.1s">
+    Software we've shipped and run ourselves — production-ready, deployed, and live right now. No sales pitch, no demos. Just click and try them.
+  </p>
+
+  <!-- ERP -->
+  <section class="product-detail reveal" id="erp">
+    <div class="detail-head">
+      <svg class="product-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="4" y="8" width="40" height="32" rx="2" stroke="currentColor" stroke-width="2"/>
+        <path d="M14 20h20M14 28h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="36" cy="28" r="3" stroke="currentColor" stroke-width="2"/>
+      </svg>
+      <h2>ERP</h2>
+      <div class="detail-tags">
+        <span class="product-tag">Enterprise</span>
+        <span class="status-pill"><i></i> Live</span>
+      </div>
+    </div>
+    <p class="detail-desc">
+      A production-ready ERPNext deployment tailored for manufacturing. Manage the entire operation — from raw material to finished goods to the balance sheet — in a single, unified system. Built on Frappe/ERPNext, one of the most flexible open-source ERP platforms, and configured around your production lines.
+    </p>
+    <div class="feature-grid">
+      <div class="feature">
+        <h4>Inventory & Stock</h4>
+        <p>Real-time stock levels, multi-warehouse tracking, and batch & serial number traceability across the plant.</p>
+      </div>
+      <div class="feature">
+        <h4>Production Planning</h4>
+        <p>BOMs, work orders, and shop-floor tracking — from material requests to finished-goods entry.</p>
+      </div>
+      <div class="feature">
+        <h4>Procurement</h4>
+        <p>Purchase orders, supplier management, goods receipts, and automated reorder points when stock runs low.</p>
+      </div>
+      <div class="feature">
+        <h4>Finance & Accounting</h4>
+        <p>Invoicing, payments, ledgers, and GST-ready reporting — finance and operations on the same page.</p>
+      </div>
+      <div class="feature">
+        <h4>HR & Payroll</h4>
+        <p>Employee records, attendance, leave management, and payroll processing in one place.</p>
+      </div>
+      <div class="feature">
+        <h4>Dashboards & Reports</h4>
+        <p>Role-based dashboards with drill-down analytics — the numbers your floor managers actually need.</p>
+      </div>
+    </div>
+    <a class="detail-launch" href="https://erp.shreeachyutam.in" target="_blank" rel="noopener">
+      Launch on erp.shreeachyutam.in <span>↗</span>
+    </a>
+  </section>
+
+  <!-- GHOST JOBS -->
+  <section class="product-detail reveal" id="ghostjobs">
+    <div class="detail-head">
+      <svg class="product-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M24 6C14 6 8 14 8 22v16l4-3 4 3 4-3 4 3 4-3 4 3 4-3 4 3V22c0-8-6-16-16-16z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        <circle cx="19" cy="20" r="2" fill="currentColor"/>
+        <circle cx="29" cy="20" r="2" fill="currentColor"/>
+      </svg>
+      <h2>Ghost Jobs</h2>
+      <div class="detail-tags">
+        <span class="product-tag">Beta</span>
+        <span class="status-pill"><i></i> Live</span>
+      </div>
+    </div>
+    <p class="detail-desc">
+      Ghost listings are one of the biggest time-wasters in job hunting — postings that companies never intend to fill. Our detector analyzes a posting across 8 independent criteria, from posting age and pay transparency to response behavior and company signals, and gives you a clear read: real or ghost.
+    </p>
+    <div class="feature-grid">
+      <div class="feature">
+        <h4>URL Scan</h4>
+        <p>Paste any company career-page URL and get a verdict in seconds. Works on most career pages.</p>
+      </div>
+      <div class="feature">
+        <h4>Text Scan</h4>
+        <p>Paste raw posting text from LinkedIn or Indeed when a URL isn't available.</p>
+      </div>
+      <div class="feature">
+        <h4>8-Criteria Engine</h4>
+        <p>Posting age, pay transparency, response behavior, and more — each signal scored and explained.</p>
+      </div>
+      <div class="feature">
+        <h4>Free Daily Checks</h4>
+        <p>Start with free checks every day; sign up for 20 checks per day without any cost.</p>
+      </div>
+      <div class="feature">
+        <h4>Clear Verdict</h4>
+        <p>No vague scores. Get a plain "real" or "ghost" read you can act on before you apply.</p>
+      </div>
+      <div class="feature">
+        <h4>Transparent Logic</h4>
+        <p>Every verdict links back to the exact criteria that triggered it — no black box.</p>
+      </div>
+    </div>
+    <a class="detail-launch" href="https://ghostjobs.shreeachyutam.in" target="_blank" rel="noopener">
+      Launch on ghostjobs.shreeachyutam.in <span>↗</span>
+    </a>
+  </section>
+
+  <!-- CBM CALCULATOR -->
+  <section class="product-detail reveal" id="cbm">
+    <div class="detail-head">
+      <svg class="product-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M24 5l16 9v20L24 43 8 34V14L24 5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M8 14l16 9 16-9M24 23v20" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      </svg>
+      <h2>CBM Calculator</h2>
+      <div class="detail-tags">
+        <span class="product-tag">Free</span>
+        <span class="status-pill"><i></i> Live</span>
+      </div>
+    </div>
+    <p class="detail-desc">
+      A fast, no-signup tool for freight shippers. Enter your carton dimensions — centimetres or inches — and get cubic metres, volume weight, and packing estimates instantly. Built for quoting ocean and air freight without the spreadsheet dance.
+    </p>
+    <div class="feature-grid">
+      <div class="feature">
+        <h4>Instant CBM</h4>
+        <p>Volume calculates live as you type — no button pressing, no page reloads.</p>
+      </div>
+      <div class="feature">
+        <h4>CM & Inches</h4>
+        <p>Dual-unit support so you can work in whichever unit your supplier quoted.</p>
+      </div>
+      <div class="feature">
+        <h4>Volume Weight</h4>
+        <p>DIM weight for air freight calculated automatically — critical for carrier quotes.</p>
+      </div>
+      <div class="feature">
+        <h4>Carton & Loads</h4>
+        <p>Add multiple cartons or pieces and get total volume for the whole shipment.</p>
+      </div>
+      <div class="feature">
+        <h4>Freight-Ready</h4>
+        <p>Clean, printable results you can paste straight into a quote email.</p>
+      </div>
+      <div class="feature">
+        <h4>No Sign-up</h4>
+        <p>Zero friction, zero account, zero cost. Open it and get your number.</p>
+      </div>
+    </div>
+    <a class="detail-launch" href="https://cbm.shreeachyutam.in" target="_blank" rel="noopener">
+      Launch on cbm.shreeachyutam.in <span>↗</span>
+    </a>
+  </section>
+
+  <!-- SIGN -->
+  <section class="product-detail reveal" id="sign">
+    <div class="detail-head">
+      <svg class="product-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6 42l3-9 24-24 6 6L15 39l-9 3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M30 12l6 6M24 20l4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <h2>Sign</h2>
+      <div class="detail-tags">
+        <span class="product-tag">E-Signature</span>
+        <span class="status-pill"><i></i> Live</span>
+      </div>
+    </div>
+    <p class="detail-desc">
+      Documenso-powered document signing, self-hosted by Shree Achyutam. Send contracts, NDAs, and agreements for e-signature in minutes — with legally valid signatures and a complete audit trail. Your documents and your data stay under your control.
+    </p>
+    <div class="feature-grid">
+      <div class="feature">
+        <h4>Send & Sign</h4>
+        <p>Legally valid e-signatures on contracts, NDAs, and agreements from any browser.</p>
+      </div>
+      <div class="feature">
+        <h4>Document Templates</h4>
+        <p>Reuse contract templates so repeat agreements take minutes, not days.</p>
+      </div>
+      <div class="feature">
+        <h4>Audit Trail</h4>
+        <p>Complete history of who signed, when, and from where — ready for compliance.</p>
+      </div>
+      <div class="feature">
+        <h4>Any Device</h4>
+        <p>Desktop, tablet, or mobile. Signers don't need an account to sign.</p>
+      </div>
+      <div class="feature">
+        <h4>Self-Hosted</h4>
+        <p>Deployed on our own infrastructure — your documents never leave your control.</p>
+      </div>
+      <div class="feature">
+        <h4>Secure by Design</h4>
+        <p>Open-source Documenso core with encrypted storage and audit-grade records.</p>
+      </div>
+    </div>
+    <a class="detail-launch" href="https://sign.shreeachyutam.in" target="_blank" rel="noopener">
+      Launch on sign.shreeachyutam.in <span>↗</span>
+    </a>
+  </section>
+
+  <!-- CTA -->
+  <section class="product-cta reveal">
+    <h2>Have an idea for the <span>next tool?</span></h2>
+    <p>We ship production software every day — and we can build yours too.</p>
+    <a class="detail-launch" href="/#contact">Start a Project <span>→</span></a>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo">Shree <span>Achyutam</span></div>
+      <p class="footer-tagline">Custom Software for Manufacturing</p>
+    </div>
+    <div class="footer-nav">
+      <h4 class="footer-heading">Navigate</h4>
+      <a href="/">Home</a>
+      <a href="/#services">Services</a>
+      <a href="/#products">Products</a>
+      <a href="/#contact">Contact</a>
+    </div>
+    <div class="footer-contact-wrap">
+      <div class="footer-contact">
+        <h4 class="footer-heading">Contact</h4>
+        <a href="mailto:support@shreeachyutam.in">support@shreeachyutam.in</a>
+        <a href="tel:+918431999811">+91 84319 99811</a>
+        <a href="https://maps.app.goo.gl/VpMKi415DkS1MDdv6" target="_blank" rel="noopener">Bilimora, Navsari, Gujarat 396321</a>
+        <p class="footer-tagline" style="margin-top:.35rem">Global Operations from Bengaluru</p>
+      </div>
+      <div class="footer-map">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3720.0!2d72.985518!3d20.768691!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjDCsDQ2JzA3LjMiTiA3MsKwNTknMDcuOCJF!5e0!3m2!1sen!2sin!4v1700000000000"
+          width="100%" height="140" style="border:0; border-radius:6px; filter:invert(90%) hue-rotate(180deg) brightness(1.1) contrast(0.9);"
+          allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">&copy; 2026 Shree Achyutam. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: .12 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

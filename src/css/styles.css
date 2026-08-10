@@ -254,6 +254,70 @@
     padding: .3rem .7rem;
   }
 
+  /* PRODUCTS */
+  .products { padding: 8rem 5vw; }
+  .products-header { margin-bottom: 4rem; max-width: 600px; }
+  .products-header h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    color: var(--white); line-height: 1;
+    margin-bottom: .8rem;
+  }
+  .products-header p { font-size: 1rem; color: var(--muted); font-weight: 300; }
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+  .product-card {
+    position: relative;
+    display: flex; flex-direction: column;
+    border: 1px solid var(--steel);
+    background: var(--dark2);
+    padding: 2rem;
+    text-decoration: none;
+    overflow: hidden;
+    transition: border-color .3s, background .3s, transform .3s;
+  }
+  .product-card::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(0,255,178,.04) 0%, transparent 60%);
+    opacity: 0; transition: opacity .3s;
+  }
+  .product-card:hover {
+    border-color: var(--hex); background: var(--dark3);
+    transform: translateY(-4px);
+  }
+  .product-card:hover::after { opacity: 1; }
+  .product-icon { width: 44px; height: 44px; color: var(--hex); margin-bottom: 1.2rem; }
+  .product-card h3 {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem;
+    letter-spacing: .04em; color: var(--white); margin-bottom: .7rem;
+  }
+  .product-card p {
+    font-size: .88rem; line-height: 1.7; color: var(--muted);
+    margin-bottom: 1.5rem; flex: 1;
+  }
+  .product-tag {
+    align-self: flex-start;
+    font-family: 'DM Mono', monospace; font-size: .62rem;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: var(--hex); border: 1px solid rgba(0,255,178,.3);
+    padding: .25rem .6rem; margin-bottom: 1.2rem;
+  }
+  .product-launch {
+    font-family: 'DM Mono', monospace; font-size: .7rem;
+    letter-spacing: .15em; text-transform: uppercase;
+    color: var(--hex); display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid var(--steel); padding-top: 1rem;
+  }
+  .product-launch span { font-size: 1rem; transition: transform .2s; }
+  .product-card:hover .product-launch span { transform: translate(2px,-2px); }
+  .products-more {
+    margin-top: 3rem; text-align: center;
+  }
+  .products-more a { text-decoration: none; display: inline-block; }
+
   /* PROCESS */
   .process { padding: 8rem 5vw; }
   .process h2 {
