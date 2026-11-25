@@ -311,8 +311,18 @@
     color: var(--hex); display: flex; align-items: center; justify-content: space-between;
     border-top: 1px solid var(--steel); padding-top: 1rem;
   }
-  .product-launch span { font-size: 1rem; transition: transform .2s; }
-  .product-card:hover .product-launch span { transform: translate(2px,-2px); }
+  .product-launch .launch-arrow { font-size: 1rem; transition: transform .2s; }
+  .product-card:hover .product-launch .launch-arrow { transform: translate(2px,-2px); }
+
+  /* Offline state while product servers are down */
+  .product-card.is-offline { cursor: default; }
+  .product-card.is-offline:hover {
+    border-color: var(--steel); background: var(--dark2); transform: none;
+  }
+  .product-card.is-offline:hover::after { opacity: 0; }
+  .product-card.is-offline .product-launch { color: var(--muted); }
+  .product-card.is-offline .launch-arrow { display: none; }
+
   .products-more {
     margin-top: 3rem; text-align: center;
   }
